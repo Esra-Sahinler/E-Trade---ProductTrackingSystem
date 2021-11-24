@@ -1,0 +1,248 @@
+﻿@using ProductTrackingSystem.Entities.Concrete
+@model List<Cart>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashi | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="/Home/HomePage/"><i class="fa fa-home"></i> Ana Sayfa</a>
+                        <a href="/Home/Index/">Ürünler</a>
+                        <span>Alışveriş Sepeti</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="cart-table">
+                        <form action="/ShoppingCart/DeleteSelectedProducts/" method="post" class="container">
+                            <div class="container" >
+                                <div style="float:left; padding-bottom:10px" >
+                                    <input type="submit" name="btnSelected" value="Seçili Ürünleri Satın Al" class="btn btn-info" id="btnSelected" />
+                                </div>
+                                <div style="float:right; padding-bottom:10px">
+                                    <input type="submit" name="submitbtn" value="Seçili Ürünleri Sil" class="btn btn-danger" />
+                                </div>
+                            </div>
+                            <table id="tblCart">
+                                <thead>
+                                    <tr>
+                                        <th style="padding-left:5px"><input type="checkbox" name="select" id="select" value="" /></th>
+                                        <th>Resim</th>
+                                        <th class="p-name">Ürün Adı</th>
+                                        <th>Fiyat</th>
+                                        <th>Miktar</th>
+                                        <th>Toplam Fiyat</th>
+                                        <th>Tarih</th>
+                                        <th><i class="ti-close"></i></th>
+                                        <th>Satın Al</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <th style="padding-left:5px"><input type="checkbox" name="select_id" id="selectid" class="selectid" value="@item.CartId" data-id="@item.Product.ProductName" /></th>
+                                            <td class="cart-pic first-row"><img src="@item.Product.ProductImage" alt=""></td>
+                                            <td class="cart-title first-row">
+                                                <h5>@item.Product.ProductName</h5>
+                                            </td>
+                                            <td class="p-price first-row">@item.Product.UnitPrice ₺</td>
+
+                                            <td class="qua-col first-row">
+                                                <div class="quantity">
+                                                    <div>
+                                                        @Html.ActionLink("-", "Decrease", new { id = item.CartId }, new { @class = "btn btn-light btn-sm .qtybtn.dec" })
+                                                    </div>
+                                                    @Html.TextBoxFor(x => item.Quantity, new { @class = "txt", data_id = item.CartId })
+                                                    <div>
+                                                        @Html.ActionLink("+", "Increase", new { id = item.CartId }, new { @class = "btn btn-light btn-sm .qtybtn" })
+                                                    </div>
+                                                </div>
+                                                @*<div class="quantity">
+                                                        <div class="pro-qty">
+                                                            <input type="text" value="1">
+                                                        </div>
+                                                    </div>*@
+                                            </td>
+                                            <td class="total-price first-row">@item.TotalPrice ₺</td>
+                                            <td class="total-price first-row">@item.Date</td>
+                                            <td class="close-td first-row"><a href="/ShoppingCart/Delete/@item.CartId"><i class="ti-close"></i></a></td>
+                                            <td class="close-td first-row" style="min-width:100px"><a href="/Sales/Buy/@item.CartId" class="btn btn-success">Satın Al</a></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="cart-buttons">
+                                <a href="/Sales/AllBuy/" class="site-btn btn-success">Hepsini Satın Al</a>
+                                <br /><br />
+                                <a href="/ShoppingCart/AllDelete/" class="site-btn btn-danger">Hepsini Sil</a>
+                                <br /><br />
+                                <a href="/Home/Index/" class="primary-btn continue-shop">Alışverişe Devam</a>
+                                <a href="#" class="primary-btn up-cart">Sepeti Güncelle</a>
+                            </div>
+                            <div class="discount-coupon">
+                                <h6>İndirim Kodu</h6>
+                                <form action="#" class="coupon-form">
+                                    <input type="text" placeholder="Kodu Giriniz">
+                                    <button type="submit" class="site-btn coupon-btn">Uygula</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 offset-lg-4">
+                            <div class="proceed-checkout">
+                                <ul>
+                                    <li class="cart-total">Toplam <span> ₺</span></li>
+                                </ul>
+                                <a href="#" class="proceed-btn">Ödeme İçin Devam Et</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+    <!-- Js Plugins -->
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery-3.3.1.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/bootstrap.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery-ui.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.countdown.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.nice-select.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.zoom.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.dd.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.slicknav.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/owl.carousel.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/main.js"></script>
+</body>
+
+</html>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<style>
+    .txt {
+        line-height: 18px;
+        width: 40px !important;
+        height: 32px;
+        font-size: 14px;
+        text-align: center;
+        border: solid 1px #ccc;
+        margin-left: 23px;
+    }
+
+    .decrease {
+        display: block;
+        cursor: pointer;
+        border: solid 1px #ccc;
+        position: absolute;
+        margin-top: -32px;
+        margin-left: 72px;
+    }
+
+    .increase {
+        display: block;
+        cursor: pointer;
+        position: absolute;
+    }
+</style>
+<script type="text/javascript">
+    $(function tutar() {
+        $('.txt').on('change', function () {
+            var quantity = $(this).val();
+            var cartId = $(this).attr('data-id');
+            $.ajax({
+                url: '/ShoppingCart/DynamicQuantity/',
+                data: { id: cartId, quantity: quantity },
+                success: function (res) {
+                    document.location.reload();
+                }
+            });
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(funciton() {
+        $("#select").click(funciton() {
+            if($(this).is(":checked")) {
+        $(".selectid").prop('checked', true)
+    }
+             else {
+            $(".selectid").prop('checked', false)
+        }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSelected").click(function () {
+            addFunction();
+        });
+    });
+    var items = [];
+    function addFunciton() {
+        $.each($("#tblCart input[type=checkbox]:checked"),
+            function (data, index) {
+                items.push({
+                    'CartId': $(this).val(),
+                    'Products.ProductName': this.attr('data-id')
+                });
+            });
+        $.ajax({
+            type: "post",
+            url: "/ShoppingCart/BuySelectedProducts",
+            data: { data: items },
+            success: function (data) {
+                document.open();
+                document.write(data);
+                document.close();
+            },
+            error: function () {
+                alert("Bir hata oluştu");
+            }
+        });
+    }
+</script>

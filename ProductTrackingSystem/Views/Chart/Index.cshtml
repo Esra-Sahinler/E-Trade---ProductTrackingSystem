@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Result Visualization</title>
+    @*<script src="~/Scripts/jquery-3.6.0.min.js"></script>*@
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script>
+            $(document).ready(function () {
+                debugger;
+                $.ajax({
+                    type: "post",
+                    url: '@Url.Action("GoogleChart", "Chart")',
+                    contentType: "application/json",
+                    dataType:'json',
+                    success: function (result) {
+                        debugger;
+                        google.charts.load('current', {
+                            'packages': ['corechart']
+                        });
+                        google.charts.setOnLoadCallback(function () {
+                            debugger;
+                            drawChart(result);
+                        });
+                    }
+                });
+            });
+
+            function drawChart(result) {
+                debugger;
+                var data = new google.visualization.DataTable();
+                data.addColumn('string', 'ProductName');
+                data.addColumn('number', 'UnitsInStok');
+                var dataArray = [];
+
+                $.each(result, function (i, obj) {
+                    debugger;
+                    dataArray.push([obj.productName, obj.unitsInStok]);
+                });
+                data.addRows(dataArray);
+                var columnChartOptions = {
+                    title: "Ürün - Stok Grafiği",
+                    width: 1000,
+                    height: 800,
+                    bar: { groupWidth: "20%" },
+                };
+                var columnChart = new google.visualization.PieChart(document
+                    .getElementById('Piechart_div'));
+
+                columnChart.draw(data, columnChartOptions);
+            }
+    </script>
+</head>
+<body>
+    <div id="Piechart_div" style="border: 1px solid #ccc"></div>
+</body>
+</html>
+

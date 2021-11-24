@@ -1,0 +1,137 @@
+﻿@using ProductTrackingSystem.Entities.Concrete
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{ string color = "";}
+<!DOCTYPE html>
+<html>
+<body class="hold-transition sidebar-mini">
+    <section class="content">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Ürün İşlemleri</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped projects">
+                    <thead>
+                        <tr>
+                            <th style="width: 1%">
+                                #
+                            </th>
+                            <th style="width: 15%">
+                                Ürün Adı
+                            </th>
+                            <th style="width: 15%">
+                                Stok Miktarı
+                            </th>
+                            <th style="width: 15%">
+                                Birim Fiyatı
+                            </th>
+                            <th style="width: 15%" class="text-center">
+                                Kategori
+                            </th>
+                            <th style="width: 15%">
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            if (item.Category.CategoryName == "Beyaz Eşya")
+                            {
+                                color = "badge badge-success";
+                            }
+                            if (item.Category.CategoryName == "Küçük Ev Aletleri")
+                            {
+                                color = "badge badge-warning";
+                            }
+                            if (item.Category.CategoryName == "Mutfak Eşyaları")
+                            {
+                                color = "badge badge-info";
+                            }
+                            if (item.Category.CategoryName == "Teknolojik Aletler")
+                            {
+                                color = "badge badge-danger";
+                            }
+                            if (item.Category.CategoryName == "Mobilya")
+                            {
+                                color = "badge badge-secondary";
+                            }
+                            <tr>
+                                <td>
+                                    @item.ProductId
+                                </td>
+                                <td>
+                                    <a>
+                                        @item.ProductName
+                                    </a>
+                                    <br />
+                                    <small>
+                                        @(((DateTime)item.Date).ToString("dd-MMM-yyyy"))
+                                    </small>
+                                </td>
+                                <td>
+                                    @item.UnitsInStock
+                                </td>
+                                <td>
+                                    @item.UnitPrice
+                                </td>
+                                @*<td>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <img alt="Avatar" class="table-avatar" src="">
+
+                                            </li>
+                                        </ul>
+                                    </td>*@
+                                <td class="project-state">
+                                    <span class="@color">@item.Category.CategoryName</span>
+                                </td>
+                                <td class="project-actions text-right">
+                                    <a class="btn btn-primary btn-sm" href="/Comment/CommentByProduct/@item.ProductId">
+                                        <i class="fas fa-folder">
+                                        </i>
+                                        Yorumlar
+                                    </a>
+                                    <a class="btn btn-info btn-sm" href="/Product/EditProduct/@item.ProductId">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Düzenle
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" href="/Product/DeleteProduct/@item.ProductId">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Sil
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+<a href="/Product/AddProduct/" class="btn btn-primary">Yeni Ürün Girişi</a>
+<br />
+<br />
+@Html.PagedListPager((IPagedList)Model, p => Url.Action("Index", new { p }), new PagedListRenderOptions
+{
+    LiElementClasses = new List<string>
+    {"page-link"}
+})
+

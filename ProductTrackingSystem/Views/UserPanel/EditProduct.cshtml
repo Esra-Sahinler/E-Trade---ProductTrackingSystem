@@ -1,0 +1,33 @@
+﻿@model ProductTrackingSystem.Entities.Concrete.Product
+
+@{
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Ürün Güncelleme Sayfası</h2>
+@using (Html.BeginForm("EditProduct", "UserPanel", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("ID")
+        @Html.TextBoxFor(x => x.ProductId, new { @class = "form-control" })
+        <br />
+        @Html.Label("Ürün Adı")
+        @Html.TextBoxFor(x => x.ProductName, new { @class = "form-control" })
+        <br />
+        @Html.Label("Stok Miktarı")
+        @Html.TextBoxFor(x => x.UnitsInStock, new { @class = "form-control" })
+        <br />
+        @Html.Label("Birim Fiyatı")
+        @Html.TextBoxFor(x => x.UnitPrice, new { @class = "form-control" })
+        <br />
+        @Html.Label("Tarih")
+        @Html.TextBoxFor(x => x.Date, new { @class = "form-control" })
+        <br />
+        @Html.Label("Kategori")
+        @Html.DropDownListFor(x => x.CategoryId, (List<SelectListItem>)ViewBag.vc, new { @class = "form-control" })
+        <br />
+        <button class="btn btn-success">Güncelle</button>
+    </div>
+}
+

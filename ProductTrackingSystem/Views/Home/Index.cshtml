@@ -1,0 +1,234 @@
+﻿@using ProductTrackingSystem.Entities.Concrete
+@model List<Product>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fashi | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="~/AdminLTE-3.0.4/fashi/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    @*<div id="preloder">
+            <div class="loader"></div>
+        </div>*@
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text">
+                        <a href="/Home/HomePage/"><i class="fa fa-home"></i> Ana Sayfa</a>
+                        <span>Ürünler</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+    <!-- Product Shop Section Begin -->
+    <section class="product-shop spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-8 order-2 order-lg-1 produts-sidebar-filter">
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Kategoriler</h4>
+                        <ul class="filter-catagories">
+                            @{
+                                var db = new ProductTrackingSystem.DataAccess.ProductTrackingDbContext();
+                                var model = db.Categories.ToList();
+                                foreach (var item in model)
+                                {
+                                    <li><a href="/Home/ProductsByCategory/@item.CategoryId">@item.CategoryName</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Marka</h4>
+                        <ul class="fw-brand-check">
+                            @{
+                                var c = new ProductTrackingSystem.DataAccess.ProductTrackingDbContext();
+                                var modelValue = c.Brands.ToList();
+                                foreach (var item in modelValue)
+                                {
+                                    <li><a href="/Home/ProductsByBrand/@item.BrandId">@item.BrandName</a></li>
+                                }
+                            }
+                            @*<label for="bc-calvin">
+                                    Canon
+                                    <input type="checkbox" id="bc-calvin">
+                                    <span class="checkmark"></span>
+                                </label>*@
+                        </ul>
+                    </div>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Fiyat</h4>
+                        <div class="filter-range-wrap">
+                            <div class="range-slider">
+                                <div class="price-input">
+                                    <input type="text" id="minamount">
+                                    <input type="text" id="maxamount">
+                                </div>
+                            </div>
+                            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                 data-min="500" data-max="10000">
+                                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                            </div>
+                        </div>
+                        <a href="#" class="filter-btn">Filtre</a>
+                    </div>
+                    <div class="filter-widget">
+                        <h4 class="fw-title">Renk</h4>
+                        <div class="fw-color-choose">
+                            <ul class="cs-item">
+                                @{
+                                    var veri = new ProductTrackingSystem.DataAccess.ProductTrackingDbContext();
+                                    var model1 = veri.Colors.ToList();
+                                    foreach (var item in model1)
+                                    {
+                                        <li><a href="/Home/ProductsByColor/@item.ColorId">@item.ColorName</a></li>
+                                    }
+                                }
+
+                                @*<input type="radio" id="cs-black">
+                                    <label class="cs-black" for="cs-black">Siyah</label>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 order-1 order-lg-2">
+                    <div class="product-show-option">
+                        <div class="row">
+                            <div class="col-lg-7 col-md-7">
+                                <div class="select-option">
+                                    <select class="sorting">
+                                        <option value="">Varsayılan Sıralama</option>
+                                    </select>
+                                    <select class="p-show">
+                                        <option value="">Gösterilen:</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 text-right">
+                                <p>36 Üründen Gösterilen 1-9 Arası</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-list">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-lg-4 col-sm-6">
+                                    <div class="product-item">
+                                        <div class="pi-pic">
+                                            <img src="@item.ProductImage" height="292" width="262" alt="">
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                            <ul>
+                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                <li class="quick-view"><a href="/Home/ProductDetails/@item.ProductId">+ Hızlı Görünüm</a></li>
+                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="pi-text">
+                                            <div class="catagory-name">@item.Category.CategoryName</div>
+                                            <a href="#">
+                                                <h5>@item.ProductName</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                @item.UnitPrice ₺
+                                                <span>@(item.UnitPrice + 230) ₺</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="loading-more">
+                        <i class="icon_loading"></i>
+                        <a href="#">
+                            Daha fazla yükleniyor..
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Shop Section End -->
+    <!-- Js Plugins -->
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery-3.3.1.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/bootstrap.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery-ui.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.countdown.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.nice-select.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.zoom.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.dd.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/jquery.slicknav.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/owl.carousel.min.js"></script>
+    <script src="~/AdminLTE-3.0.4/fashi/js/main.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+@*<div class="span9">
+        <ul class="breadcrumb">
+            <li><a href="/Home/Index">Anasayfa</a><span class="divider"></span></li>
+            <li class="active">Ürünler</li>
+        </ul>
+    </div>*@
+@*<body>
+        @foreach (var item in Model)
+        {
+            <div class="w3ls_mobiles_grid_right_grid3">
+                <div class="col-md-4 agileinfo_new_products_grid agileinfo_new_products_grid_mobiles">
+                    <div class="agile_ecommerce_tab_left mobiles_grid">
+                        <div class="hs-wrapper hs-wrapper2">
+                            <a href="/Home/ProductDetails/@item.ProductId"><img src="@item.ProductImage" style="max-width:210px;max-height:220px;min-width:210px;min-height:220px;" alt=" " class="img-responsive" /></a>
+                        </div>
+                        <h5><a href="/Home/ProductDetails/@item.ProductId">@item.ProductName</a></h5>
+                        <div class="simpleCart_shelfItem">
+                            <p><span>@(item.UnitPrice + 230) ₺</span> <i class="item_price">@item.UnitPrice ₺</i></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </body>*@

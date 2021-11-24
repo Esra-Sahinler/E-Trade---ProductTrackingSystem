@@ -1,0 +1,60 @@
+﻿@model ProductTrackingSystem.Entities.Concrete.Category
+
+@{
+    ViewBag.Title = "AddCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@*<script type="text/javascript" src="//code.jquery.com/jquery-3.3.1.min.js"></script>*@
+<script src="~/Scripts/jquery-3.6.0.slim.min.js"></script>
+<link href="~/Content/sweetalert/sweet-alert.css" rel="stylesheet" />
+@*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>*@
+<script src="~/Scripts/sweetalert.min.js"></script>
+<h1>Yeni Kategori Ekleme Sayfası</h1>
+<br />
+@using (Html.BeginForm("AddCategory", "AdminCategory", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Kategori Adı")
+        @Html.TextBoxFor(x => x.CategoryName, new { @class = "from-control" })
+        @Html.ValidationMessageFor(x => x.CategoryName)
+        <br /> <br />
+        <button class="btn btn-info" id="ekle">Kaydet</button>
+
+
+    </div>
+}
+
+@*<script>
+        $('#ekle').click(function () {
+            debugger;
+            //swal("Başarılı", "Kategori Eklendi", "success");
+        });
+    </script>*@
+
+
+<script type="text/javascript">
+    //var myVar
+    //function time() {
+    //    myVar = setTimeout(alert, 5000);
+    //}
+
+    $('#ekle').click(function () {
+        //debugger;
+        swal("Başarılı", "Kategori Eklendi", "success");
+    });
+</script>
+
+@*<script type="text/javascript">
+    $('#ekle').click(function () {
+        sweetAlert({
+            title: "Başarılı",
+            text: "Kategori Eklendi",
+            allowEscapeKey: "true",
+            showConfirmButton: "true",
+            confirmButtonText: "Tamamdır",
+            timer: "20000",
+            html: "true"
+        });
+    });
+</script>*@

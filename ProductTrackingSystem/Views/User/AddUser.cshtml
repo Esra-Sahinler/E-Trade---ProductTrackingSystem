@@ -1,0 +1,30 @@
+﻿@model ProductTrackingSystem.Entities.Concrete.User
+@{
+    ViewBag.Title = "AddUser";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yeni Kullanıcı Ekleme Sayfası</h2>
+<br />
+@using(Html.BeginForm("AddUser","User",FormMethod.Post))
+{
+<div class="form-group">
+    @Html.Label("Kullanıcı Adı")
+    @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Name)
+    <br />
+    @Html.Label("Kullanıcı Soyadı")
+    @Html.TextBoxFor(x => x.Surname, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Surname)
+    <br />
+    @Html.Label("Email")
+    @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.Email)
+    <br />
+    @Html.Label("Hakkında")
+    @Html.TextBoxFor(x => x.About, new { @class = "form-control" })
+    @Html.ValidationMessageFor(x => x.About)
+    <br />
+    <button class="btn btn-info">Kullanıcı Ekle</button>
+</div>
+}

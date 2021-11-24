@@ -1,0 +1,38 @@
+﻿@model ProductTrackingSystem.Entities.Concrete.User
+
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<h2>Profilinizi Düzenleyin</h2>
+@using (Html.BeginForm("UserProfile", "UserPanel", FormMethod.Post))
+{
+    <div class="form-group">
+        @*@Html.Label("ID")*@
+        @Html.HiddenFor(x => x.UserId, new { @class = "form-control" })
+
+        @Html.Label("Kullanıcı Adı")
+        @Html.TextBoxFor(x => x.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Name)
+        <br />
+        @Html.Label("Kullanıcı Soyadı")
+        @Html.TextBoxFor(x => x.Surname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Surname)
+        <br />
+        @Html.Label("Email")
+        @Html.TextBoxFor(x => x.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Email)
+        <br />
+        @Html.Label("Şifre")
+        @Html.TextBoxFor(x => x.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Password)
+        <br />
+        @Html.Label("Hakkında")
+        @Html.TextBoxFor(x => x.About, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.About)
+        <br />
+        <button class="btn btn-success">Profili Güncelle</button>
+    </div>
+}
+

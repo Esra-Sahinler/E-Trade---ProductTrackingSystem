@@ -1,0 +1,52 @@
+﻿@using ProductTrackingSystem.Entities.Concrete
+@model List<Cart>
+
+@{
+    ViewBag.Title = "AllBuy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="container">
+        <h5>Satın Alma Sayfası</h5>
+        <hr />
+    </div>
+</div>
+
+@using (Html.BeginForm("AllBuys", "Sales", FormMethod.Post, new { @class = "container" }))
+{
+    foreach (var item in Model)
+    {
+        <div class="container">
+            <div class="form-group">
+                <h5>ID: @Html.DisplayFor(x => item.CartId)</h5>
+            </div>
+            <div class="form-group">
+                Kullanıcı Adı: @Html.DisplayFor(x => item.User.Name)
+            </div>
+            <div class="form-group">
+                Ürün Adı: @Html.DisplayFor(x => item.Product.ProductName)
+            </div>
+            <div class="form-group">
+                Birim Fiyatı: @Html.DisplayFor(x => item.UnitPrice)
+            </div>
+            <div class="form-group">
+                Miktarı: @Html.DisplayFor(x => item.Quantity)
+            </div>
+            <div class="form-group">
+                <h5 class="text-danger">Toplam Fiyat: @Html.DisplayFor(x => item.TotalPrice)</h5>
+            </div>
+            <hr />
+        </div>
+    }
+
+    <div class="container">
+        <div><h5 class="text-danger text-center">@ViewBag.Tutar</h5></div>
+        <div class="form-group" style="float:left">
+            <button class="btn btn-success">Onay</button>
+        </div>
+        <div>
+            <a class="btn btn-dark" href="/ShoppingCart/Index" style="float:right">İptal</a>
+        </div>
+    </div>
+}

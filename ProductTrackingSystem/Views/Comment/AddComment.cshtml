@@ -1,0 +1,23 @@
+﻿@model ProductTrackingSystem.Entities.Concrete.Comment
+@{
+    ViewBag.Title = "AddComment";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Yeni Yorum Ekleme Sayfası</h2>
+<br />
+@using (Html.BeginForm("AddComment", "Comment", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Yorum")
+        @Html.TextBoxFor(x => x.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.Description)
+        <br />
+        @Html.Label("Kullanıcı")
+        @Html.DropDownListFor(x=>x.UserId,(List<SelectListItem>)ViewBag.vu, new { @class = "form-control" })
+        @Html.ValidationMessageFor(x => x.UserId)
+        <br />
+        <button class="btn btn-info">Yorum Ekle</button>
+    </div>
+}
+
